@@ -52,13 +52,26 @@ public class FunçõesBase{
 	}
 	
 	public Double calcularAprovacao() {
-		Double media;
+		Double media = 0.0;
+		int cont = 0;
 		if(calcularMedia()<mediaAnual) {
 			media = mediaAnual-calcularMedia();
 			return media;
 		}else {
-			System.out.println("Aprovado");
-			return calcularMedia();
+			for(int i = 0;i<=3;i++) {
+				if(notas.get(i)>=0) {
+				media =+ notas.get(i);
+				if(i>0)
+				mediaAnual+=mediaAnual;
+				cont++;
+				}
+			}
+			if(cont!=0) {
+			media = media-mediaAnual; 
+			return media;
+			}else
+			
+			return media=0.0;
 		}
 	}
 }
