@@ -2,24 +2,28 @@ package view;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
-import grafico.FunçõesBase;
+import grafico.FunÃ§ÃµesBase;
 
 public class GraficoPanel extends JPanel{
 
 	JLabel anual, atual, necessaria, nanual, natual, nnecessaria, e1, e2, e3, e4;
 	JButton b1, b2, b3, b4;
-	FunçõesBase n = new FunçõesBase();
+	FunÃ§ÃµesBase n = new FunÃ§ÃµesBase();
 	JList lista = new JList();
 	List<String> materias = new ArrayList<String>();
 	List<JButton> bot = new ArrayList();
@@ -34,15 +38,15 @@ public class GraficoPanel extends JPanel{
 	}
 	
 	private void criarTelaGrafico() {
-		materias.add("Matemática");
-		materias.add("Português");
-		materias.add("Química");
+		materias.add("MatemÃ¡tica");
+		materias.add("PortuguÃªs");
+		materias.add("QuÃ­mica");
 		materias.add("POO");
 		materias.add("Banco de dados");
 		
-		anual = new JLabel("Média anual:");
-		atual = new JLabel("Média atual:");
-		necessaria = new JLabel("Nota para aprovação:");
+		anual = new JLabel("MÃ©dia anual:");
+		atual = new JLabel("MÃ©dia atual:");
+		necessaria = new JLabel("Nota para aprovaÃ§Ã£o:");
 		
 		lista = new JList<Object>(materias.toArray());
 		lista.setSelectedIndex(0);
@@ -70,10 +74,10 @@ public class GraficoPanel extends JPanel{
 		add(nnecessaria);
 		nnecessaria.setBounds(150, 250, 150, 20);
 		
-		e1 = new JLabel("1° etapa");
-		e2 = new JLabel("2° etapa");
-		e3 = new JLabel("3° etapa");
-		e4 = new JLabel("4° etapa");
+		e1 = new JLabel("1Â° etapa");
+		e2 = new JLabel("2Â° etapa");
+		e3 = new JLabel("3Â° etapa");
+		e4 = new JLabel("4Â° etapa");
 		
 		add(e1);
 		e1.setBounds(250, 500, 150, 20);
@@ -86,9 +90,53 @@ public class GraficoPanel extends JPanel{
 		
 		
 		b1 = new JButton("Inserir nota");
+		b1.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String nota = JOptionPane.showInputDialog("Insira a nota");
+				Double m = Double.parseDouble(nota);
+				n.alterarNota(1, m);
+				natual.setText(n.calcularMedia()+"");
+				nnecessaria.setText(n.calcularAprovacao()+"");
+			}
+		});
 		b2 = new JButton("Inserir nota");
+		b2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String nota = JOptionPane.showInputDialog("Insira a nota");
+				Double m = Double.parseDouble(nota);
+				n.alterarNota(2, m);
+				natual.setText(n.calcularMedia()+"");
+				nnecessaria.setText(n.calcularAprovacao()+"");
+			}
+		});
 		b3 = new JButton("Inserir nota");
+		b3.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String nota = JOptionPane.showInputDialog("Insira a nota");
+				Double m = Double.parseDouble(nota);
+				n.alterarNota(3, m);
+				natual.setText(n.calcularMedia()+"");
+				nnecessaria.setText(n.calcularAprovacao()+"");
+			}
+		});
 		b4 = new JButton("Inserir nota");
+		b4.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String nota = JOptionPane.showInputDialog("Insira a nota");
+				Double m = Double.parseDouble(nota);
+				n.alterarNota(4, m);
+				natual.setText(n.calcularMedia()+"");
+				nnecessaria.setText(n.calcularAprovacao()+"");
+			}
+		});
 		
 		add(b1);
 		b1.setBounds(225, 550, 100, 20);
@@ -105,7 +153,7 @@ public class GraficoPanel extends JPanel{
 		super.paintComponents(g);
 		this.setBackground(Color.WHITE);
 		g.setColor(Color.BLACK);
-		g.fillRect(600, 400, 30, 50);
+		g.fillRect(600, 400, 50, n.calcularMedia()*10);
 	}
 	public static void main(String[] args) {
 		JFrame t = new JFrame("Grafico");
@@ -117,3 +165,4 @@ public class GraficoPanel extends JPanel{
 		t.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }
+
