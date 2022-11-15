@@ -1,11 +1,10 @@
-package grafico;
+package view;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
+
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,16 +15,15 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
-import grafico.FunçõesBase;
+import model.Materia;
 
 public class GraficoPanel extends JPanel{
 
 	JLabel anual, atual, necessaria, nanual, natual, nnecessaria, e1, e2, e3, e4;
 	JButton b1, b2, b3, b4;
-	FunçõesBase n = new FunçõesBase();
+	Materia n = new Materia();
 	JList lista = new JList();
-	List<String> materias = new ArrayList<String>();
-	List<JButton> bot = new ArrayList();
+	String m[] = {"Matemática", "Português", "Química", "POO", "Banco de dado"};
     Double d = n.calcularMedia();
     Integer i = 0, j = 0, k = 0, y = 0;
 	
@@ -33,23 +31,18 @@ public class GraficoPanel extends JPanel{
 		criarTelaGrafico();
 		
 		setLayout(null);
-		setBounds(0,0,800, 680);
+		setBounds(0,100,700, 680);
 		setVisible(true);
 		
 	}
 	
 	private void criarTelaGrafico() {
-		materias.add("Matemática");
-		materias.add("Português");
-		materias.add("Química");
-		materias.add("POO");
-		materias.add("Banco de dados");
 		
 		anual = new JLabel("Média anual:");
 		atual = new JLabel("Média atual:");
 		necessaria = new JLabel("Nota para aprovação:");
 		
-		lista = new JList<Object>(materias.toArray());
+		lista = new JList(m);
 		lista.setSelectedIndex(0);
 		lista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
@@ -93,7 +86,7 @@ public class GraficoPanel extends JPanel{
 		b1 = new JButton("Inserir nota");
 		b1.addActionListener(new ActionListener() {
 			
-			@OverRide
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				String nota = JOptionPane.showInputDialog("Insira a nota");
 				Double m = Double.parseDouble(nota);
@@ -108,7 +101,7 @@ public class GraficoPanel extends JPanel{
 		b2 = new JButton("Inserir nota");
 		b2.addActionListener(new ActionListener() {
 			
-			@OverRide
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				String nota = JOptionPane.showInputDialog("Insira a nota");
 				Double m = Double.parseDouble(nota);
@@ -123,7 +116,7 @@ public class GraficoPanel extends JPanel{
 		b3 = new JButton("Inserir nota");
 		b3.addActionListener(new ActionListener() {
 			
-			@OverRide
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				String nota = JOptionPane.showInputDialog("Insira a nota");
 				Double m = Double.parseDouble(nota);
@@ -138,7 +131,7 @@ public class GraficoPanel extends JPanel{
 		b4 = new JButton("Inserir nota");
 		b4.addActionListener(new ActionListener() {
 			
-			@OverRide
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				String nota = JOptionPane.showInputDialog("Insira a nota");
 				Double m = Double.parseDouble(nota);
@@ -161,7 +154,7 @@ public class GraficoPanel extends JPanel{
 		b4.setBounds(600, 550, 100, 20);
 	}
 	
-	@OverRide
+	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponents(g);
 		this.setBackground(Color.WHITE);
