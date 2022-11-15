@@ -1,0 +1,131 @@
+package view;
+    
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.text.ParseException;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
+import controller.AlunoController;
+
+public class TelaCadastro extends JFrame{
+	
+	JLabel cadastro, u, c, s, se, aviso; 	
+	
+	JButton confirmar;
+	JTextField usuario, curso, serie, senha;
+	public TelaCadastro() {
+		Container cont = getContentPane();
+		setBackground(new Color(200,200,200));
+		setLayout(null);
+		setSize(800, 680);
+		setVisible(true);
+		
+		confirmar = new JButton("Confirmar");
+		
+		confirmar.addActionListener(new ActionListener(){
+            
+        	@Override
+        	public void actionPerformed(ActionEvent e) {
+        		
+        		usuario.setText(usuario.getText().trim());
+        		senha.setText(senha.getText().trim());
+        		curso.setText(curso.getText().trim());
+        		serie.setText(serie.getText().trim());
+        		
+        		if(usuario.getText()!=""&&senha.getText()!=""&&curso.getText()!=""&&serie.getText()!=""){
+        		AlunoController ac = new AlunoController();
+        		try {
+					ac.salvar(usuario.getText(), senha.getText(), curso.getText(), Integer.parseInt(serie.getText()));
+        		}	catch (SQLException e1) {
+        			JOptionPane.showMessageDialog(null, "Nao foi possivel alterar contato!n" + e1.getLocalizedMessage());
+				}        		
+        		
+        		new InterfaceGráfico();
+        		setVisible(false);
+        		}else {
+        			aviso.setVisible(true);
+        			usuario.setText("");
+        			senha.setText("");
+        			curso.setText("");
+        			serie.setText("");
+        		}
+        	}		
+        });
+    
+			
+		cadastro = new JLabel("CADASTRO");
+		u = new JLabel("Nome:");
+		c = new JLabel("Curso:");
+		s = new JLabel("Serie:");
+		se = new JLabel("Senha:");
+		
+		cont.add(cadastro);
+		cont.add(u);
+		cont.add(c);
+		cont.add(s);
+		cont.add(se);
+		cont.add(confirmar);
+		
+		usuario = new JTextField();
+		curso = new JTextField();
+		serie = new JTextField();
+		senha = new JTextField();
+		
+		cont.add(usuario);
+		cont.add(curso);
+		cont.add(serie);
+		cont.add(senha);
+		
+		
+		
+		cadastro.setBounds(350, 20, 150, 50);
+		u.setBounds(275, 200, 150, 20);
+		c.setBounds(275, 300, 150, 20);
+		s.setBounds(275, 350, 150, 20);
+		se.setBounds(275, 250, 150, 20);
+		usuario.setBounds(325, 200, 150, 20);
+		curso.setBounds(325, 300, 150, 20);
+		serie.setBounds(325, 350, 150, 20);
+		senha.setBounds(325, 250, 150, 20);
+		confirmar.setBounds(300, 400, 150, 20);
+
+
+	aviso = new JLabel("Preencha todos os campos");
+	cont.add(aviso);
+	aviso.setBounds(275, 500, 200, 20);
+	aviso.setVisible(false);
+	}
+	public class AcionaBotao implements ActionListener{
+    
+    	@Override
+    	public void actionPerformed(ActionEvent e) {
+    		new InterfaceGráfico();
+    		setVisible(false);
+    	}		
+    	}
+	public static void main(String args[]) {
+		  javax.swing.SwingUtilities.invokeLater(
+				  new Runnable() {                    
+	                	@Override
+	                    public void run() {
+	                    	JFrame.setDefaultLookAndFeelDecorated(true);
+	                    	JDialog.setDefaultLookAndFeelDecorated(true);
+	                    	TelaCadastro band = new TelaCadastro();
+	                        band.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	                       
+	                        band.setVisible(true);
+	                	}
+	        		}
+				  );
+	}
+}
