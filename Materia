@@ -1,34 +1,53 @@
-package grafico;
-
+package model;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class FunçõesBase{
+public class Materia {
 	
+	private String nome;
+	private String u_nome;
 	private List<Double> notas = new LinkedList<Double>();
 	private Double mediaAnual = 6.0;
 	
-	public FunçõesBase() {
-		this.notas.add(0, -1.0);
-		this.notas.add(1, -1.0);
-		this.notas.add(2, -1.0);
-		this.notas.add(3, -1.0);
-	}
-	public FunçõesBase(Double mediaAnual) {
-		this.mediaAnual=mediaAnual;
-		this.notas.add(0, -1.0);
-		this.notas.add(1, -1.0);
-		this.notas.add(2, -1.0);
-		this.notas.add(3, -1.0);
+	public Materia() {
 	}
 	
+	public Materia(String nome, String u_nome, List<Double> notas, Double mediaAnual) {
+		super();
+		this.nome = nome;
+		this.u_nome = u_nome;
+		this.notas = notas;
+		this.mediaAnual = mediaAnual;
+	}
+
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getU_nome() {
+		return u_nome;
+	}
+
+	public void setU_nome(String u_nome) {
+		this.u_nome = u_nome;
+	}
+
 	public Double getMediaBimestral(int bim) {
 		return notas.get(bim-1);
 	}
 	
 	public Double getMediaAnual() {
 		return this.mediaAnual;
+	}
+	
+	public void setMediaAnual(Double mediaAnual) {
+		this.mediaAnual=mediaAnual;
 	}
 	
 	public void alterarNota(int bim, double nota){
@@ -39,8 +58,8 @@ public class FunçõesBase{
 		Double media = 0.0;
 		int cont = 0;
 		for(int i = 0;i<=3;i++) {
-			if(notas.get(i)>=0) {
-			media =+ notas.get(i);
+			if(notas.get(i)!= null) {
+			media += notas.get(i);
 			cont++;
 			}
 		}
@@ -53,21 +72,22 @@ public class FunçõesBase{
 	
 	public Double calcularAprovacao() {
 		Double media = 0.0;
+		Double mediaA = 0.0;
 		int cont = 0;
 		if(calcularMedia()<mediaAnual) {
 			media = mediaAnual-calcularMedia();
 			return media;
 		}else {
 			for(int i = 0;i<=3;i++) {
-				if(notas.get(i)>=0) {
+				if(notas.get(i)!=null) {
 				media =+ notas.get(i);
 				if(i>0)
-				mediaAnual+=mediaAnual;
+				mediaA+=mediaA;
 				cont++;
 				}
 			}
 			if(cont!=0) {
-			media = media-mediaAnual; 
+			media = media-mediaA; 
 			return media;
 			}else
 			
