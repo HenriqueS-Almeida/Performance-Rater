@@ -1,4 +1,3 @@
-package materia;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,13 +8,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 public class InterfaceMaterias extends JFrame{
-	JButton m, p, q, poo, bd;
+	JButton m, p, q, poo, bd, g;
 	JLabel materia;
 	
 	public InterfaceMaterias() {
 		super("Disciplinas");
 		
 		criarTela();
+		trocaPanel();
 		
 		setLayout(null);
 		setSize(800, 680);
@@ -24,11 +24,12 @@ public class InterfaceMaterias extends JFrame{
 	
 	private void criarTela() {
 
-		m = new JButton("Matem·tica");
-		p = new JButton("PortuguÍs");
-		q = new JButton("QuÌmica");
+		m = new JButton("Matem√°tica");
+		p = new JButton("Portugu√™s");
+		q = new JButton("Qu√≠mica");
 		poo = new JButton("POO");
 		bd = new JButton("Banco de dados");
+		g = new JButton("Geografia");
 		
 		add(m);
 		m.setBounds(20,150,200,125);
@@ -40,20 +41,23 @@ public class InterfaceMaterias extends JFrame{
 		poo.setBounds(290,350,200,125);
 		add(bd);
 		bd.setBounds(560,350,200,125);
+		add(g);
+		g.setBounds(20,350,200,125);
 		
 		p.addActionListener(new Evento());
 	}
 	
 	private void telaP() {
-		materia = new JLabel("PortuguÍs");
+		materia = new JLabel("Portugu√™s");
 		add(materia);
 		materia.setBounds(350,50,200,125);
 		
-		m = new JButton("An·lise de discurso");
-		p = new JButton("InterpretaÁ„o de texto");
-		q = new JButton("GÍneros textuais");
-		poo = new JButton("InterpretaÁ„o de texto n„o verbal");
-		bd = new JButton("DomÌnio da normal culta");
+		m = new JButton("An√°lise de discurso");
+		p = new JButton("Interpreta√ß√£o de texto");
+		q = new JButton("G√™neros textuais");
+		poo = new JButton("Interpreta√ß√£o de texto n√£o verbal");
+		bd = new JButton("Dom√≠nio da normal culta");
+		g = new JButton("Per√≠odo composto");
 		
 		add(m);
 		m.setBounds(20,150,200,125);
@@ -65,6 +69,42 @@ public class InterfaceMaterias extends JFrame{
 		poo.setBounds(290,350,200,125);
 		add(bd);
 		bd.setBounds(560,350,200,125);
+		add(g);
+		g.setBounds(20, 350, 200, 125);
+	}
+
+	private void trocaPanel() {
+		JButton g, m, a;
+
+		g = new JButton("Gr√°fico");		
+		m = new JButton("Mat√©rias");	
+		a = new JButton("Agenda");	
+		
+		
+		g.setBounds(300, 10, 100, 20);
+		g.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new InterfaceGr√°fico();
+				dispose();
+			}
+		});
+		add(g);
+		m.setBounds(410, 10, 100, 20);
+		m.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new InterfaceMaterias();
+				dispose();
+			}
+		});
+		add(m);
+		a.setBounds(520, 10, 100, 20);
+		add(a);
+		
+		
 	}
 	
 	private class Evento implements ActionListener{
@@ -77,6 +117,7 @@ public class InterfaceMaterias extends JFrame{
 				remove(q);
 				remove(p);
 				remove(bd);
+				remove(g);
 				
 				telaP();
 				
