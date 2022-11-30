@@ -1,0 +1,114 @@
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.text.ParseException;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
+
+
+import model.Aluno;
+
+public class TelaLogin extends JFrame{
+	
+	JLabel cadastro, u, se, aviso, texto; 	
+	
+	JButton confirmar, cadastrar;
+	JTextField usuario, senha;
+	public TelaLogin() {
+		Container cont = getContentPane();
+		setBackground(new Color(200,200,200));
+		setLayout(null);
+		setSize(800, 680);
+		setVisible(true);
+		
+		confirmar = new JButton("Confirmar");
+        cadastrar = new JButton("Cadastre-se");
+		
+		confirmar.addActionListener(new ActionListener(){
+            
+        	@Override
+        	public void actionPerformed(ActionEvent e) {
+        		AlunoController ac = new AlunoController();
+				Aluno aluno;
+        		usuario.setText(usuario.getText().trim());
+        		senha.setText(senha.getText().trim());
+        		
+        		try {
+					aluno = ac.buscaAlunoPorNome(usuario.getText());
+					aluno.setSenha(aluno.getSenha().trim());
+					
+					new TelaInicial();
+					dispose();
+				} catch (SQLException e1) {
+					JOptionPane.showMessageDialog(null, "Credenciais incorretas" + e1.getLocalizedMessage());
+				}
+        	}		
+        });
+    
+        cadastrar.addActionListener(new ActionListener(){
+            @Override
+        	public void actionPerformed(ActionEvent e) {
+                new TelaCadastro();
+                dispose();
+         }});
+
+		cadastro = new JLabel("LOGIN");
+		u = new JLabel("Nome:");
+		se = new JLabel("Senha:");
+        texto = new JLabel("Não possui conta?");
+		
+		cont.add(cadastro);
+		cont.add(u);
+		cont.add(se);
+		cont.add(confirmar);
+		
+		usuario = new JTextField();
+		senha = new JTextField();
+		
+		cont.add(usuario);
+		cont.add(senha);
+        cont.add(cadastrar);
+        cont.add(texto);
+		
+		
+		
+		cadastro.setBounds(350, 20, 150, 50);
+		u.setBounds(275, 200, 150, 20);
+		se.setBounds(275, 250, 150, 20);
+		usuario.setBounds(325, 200, 150, 20);
+		senha.setBounds(325, 250, 150, 20);
+		confirmar.setBounds(300, 400, 150, 20);
+        texto.setBounds(325, 500, 150, 20);
+        cadastrar.setBounds(300, 550, 150, 20);
+
+
+	aviso = new JLabel("Credenciais incorretas");
+	cont.add(aviso);
+	aviso.setBounds(300, 300, 200, 20);
+	aviso.setVisible(false);
+	}
+	public static void main(String args[]) {
+		  javax.swing.SwingUtilities.invokeLater(
+				  new Runnable() {                    
+	                	@Override
+	                    public void run() {
+	                    	JFrame.setDefaultLookAndFeelDecorated(true);
+	                    	JDialog.setDefaultLookAndFeelDecorated(true);
+	                    	TelaLogin band = new TelaLogin();
+	                        band.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	                       
+	                        band.setVisible(true);
+	                	}
+	        		}
+				  );
+	}
+}
