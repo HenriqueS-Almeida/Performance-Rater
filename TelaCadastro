@@ -1,11 +1,9 @@
-package view;
-    
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.text.ParseException;
+
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -15,7 +13,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import controller.AlunoController;
 
 public class TelaCadastro extends JFrame{
 	
@@ -46,12 +43,13 @@ public class TelaCadastro extends JFrame{
         		AlunoController ac = new AlunoController();
         		try {
 					ac.salvar(usuario.getText(), senha.getText(), curso.getText(), Integer.parseInt(serie.getText()));
+					ac.buscaAlunoPorNome(usuario.getText()).setId(ac.buscaAlunoPorNome(usuario.getText()).getId());;
         		}	catch (SQLException e1) {
-        			JOptionPane.showMessageDialog(null, "Nao foi possivel alterar contato!n" + e1.getLocalizedMessage());
+        			JOptionPane.showMessageDialog(null, "Nao foi possivel registrarn" + e1.getLocalizedMessage());
 				}        		
         		
-        		new InterfaceGráfico();
-        		setVisible(false);
+        		new TelaLogin();
+        		dispose();
         		}else {
         			aviso.setVisible(true);
         			usuario.setText("");
@@ -105,14 +103,7 @@ public class TelaCadastro extends JFrame{
 	aviso.setBounds(275, 500, 200, 20);
 	aviso.setVisible(false);
 	}
-	public class AcionaBotao implements ActionListener{
-    
-    	@Override
-    	public void actionPerformed(ActionEvent e) {
-    		new InterfaceGráfico();
-    		setVisible(false);
-    	}		
-    	}
+	
 	public static void main(String args[]) {
 		  javax.swing.SwingUtilities.invokeLater(
 				  new Runnable() {                    
