@@ -11,14 +11,17 @@ public class Materia {
 	private Double mediaAnual = 6.0;
 	
 	public Materia() {
+		this.notas.add(0, -1.0);
+		this.notas.add(1, -1.0);
+		this.notas.add(2, -1.0);
+		this.notas.add(3, -1.0);
 	}
-	
-	public Materia(String nome, String u_nome, List<Double> notas, Double mediaAnual) {
-		super();
-		this.nome = nome;
-		this.u_nome = u_nome;
-		this.notas = notas;
-		this.mediaAnual = mediaAnual;
+	public Materia(Double mediaAnual) {
+		this.mediaAnual=mediaAnual;
+		this.notas.add(0, -1.0);
+		this.notas.add(1, -1.0);
+		this.notas.add(2, -1.0);
+		this.notas.add(3, -1.0);
 	}
 
 
@@ -58,12 +61,12 @@ public class Materia {
 		Double media = 0.0;
 		int cont = 0;
 		for(int i = 0;i<=3;i++) {
-			if(notas.get(i)!= null) {
+			if(notas.get(i)>=0) {
 			media += notas.get(i);
 			cont++;
 			}
 		}
-		if(cont!=0) {
+		if(cont!=0.0) {
 		media = media/cont; 
 		return media;
 		}else 
@@ -72,22 +75,21 @@ public class Materia {
 	
 	public Double calcularAprovacao() {
 		Double media = 0.0;
-		Double mediaA = 0.0;
+		Double mediaA = mediaAnual;
 		int cont = 0;
 		if(calcularMedia()<mediaAnual) {
 			media = mediaAnual-calcularMedia();
 			return media;
 		}else {
 			for(int i = 0;i<=3;i++) {
-				if(notas.get(i)!=null) {
-				media =+ notas.get(i);
-				if(i>0)
+				if(notas.get(i)>=0.0) {
+				media += notas.get(i);
 				mediaA+=mediaA;
 				cont++;
 				}
 			}
 			if(cont!=0) {
-			media = media-mediaA; 
+			 media = mediaA-media;
 			return media;
 			}else
 			
