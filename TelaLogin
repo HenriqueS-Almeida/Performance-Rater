@@ -1,3 +1,5 @@
+package view;
+
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
@@ -13,8 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-
-
+import controller.AlunoController;
 import model.Aluno;
 
 public class TelaLogin extends JFrame{
@@ -40,16 +41,20 @@ public class TelaLogin extends JFrame{
         		AlunoController ac = new AlunoController();
 				Aluno aluno;
         		usuario.setText(usuario.getText().trim());
-        		senha.setText(senha.getText().trim());
+        		
         		
         		try {
 					aluno = ac.buscaAlunoPorNome(usuario.getText());
-					aluno.setSenha(aluno.getSenha().trim());
+					if(aluno.getSenha() == senha.getText()) {
+						JOptionPane.showMessageDialog(null, "Login realizado com sucesso");
+						new InterfaceMaterias();
+						dispose();
+					}else
+						JOptionPane.showMessageDialog(null, "Credenciais incorretas");
 					
-					new TelaInicial();
-					dispose();
+					
 				} catch (SQLException e1) {
-					JOptionPane.showMessageDialog(null, "Credenciais incorretas" + e1.getLocalizedMessage());
+					JOptionPane.showMessageDialog(null, "Não foi possivel realizar o login" + e1.getLocalizedMessage());
 				}
         	}		
         });
