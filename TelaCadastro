@@ -1,9 +1,11 @@
+package view;
+    
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-
+import java.text.ParseException;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -12,11 +14,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.plaf.multi.MultiLabelUI;
 
+import controller.AlunoController;
 
 public class TelaCadastro extends JFrame{
 	
-	JLabel cadastro, u, c, s, se, aviso; 	
+	JLabel cadastro, u, c, s, se, aviso1, aviso2; 	
 	
 	JButton confirmar;
 	JTextField usuario, curso, serie, senha;
@@ -35,27 +39,37 @@ public class TelaCadastro extends JFrame{
         	public void actionPerformed(ActionEvent e) {
         		
         		usuario.setText(usuario.getText().trim());
-        		senha.setText(senha.getText().trim());
         		curso.setText(curso.getText().trim());
         		serie.setText(serie.getText().trim());
         		
-        		if(usuario.getText()!=""&&senha.getText()!=""&&curso.getText()!=""&&serie.getText()!=""){
-        		AlunoController ac = new AlunoController();
-        		try {
-					ac.salvar(usuario.getText(), senha.getText(), curso.getText(), Integer.parseInt(serie.getText()));
-					ac.buscaAlunoPorNome(usuario.getText()).setId(ac.buscaAlunoPorNome(usuario.getText()).getId());;
-        		}	catch (SQLException e1) {
-        			JOptionPane.showMessageDialog(null, "Nao foi possivel registrarn" + e1.getLocalizedMessage());
-				}        		
-        		
-        		new TelaLogin();
-        		dispose();
-        		}else {
-        			aviso.setVisible(true);
+        		if(usuario.getText().length()==0||senha.getText().length()==0||curso.getText().length()==0||serie.getText().length()==0){
+        		    aviso2.setVisible(false);
+        			aviso1.setVisible(true);
         			usuario.setText("");
         			senha.setText("");
         			curso.setText("");
         			serie.setText("");
+        		
+        		
+        		}else {
+        			AlunoController ac = new AlunoController();
+        		try {
+        			if(usuario.getText().length()<=3|| senha.getText().length()<=3){
+        				aviso1.setVisible(false);
+        				aviso2.setVisible(true);
+        				usuario.setText("");
+        				senha.setText("");
+        				curso.setText("");
+        				serie.setText("");
+        			}else {
+        				ac.salvar(usuario.getText(), senha.getText(), curso.getText(), Integer.parseInt(serie.getText()));
+        				JOptionPane.showMessageDialog(null, "Login realizado com sucesso");
+        				new InterfaceMaterias();
+        				dispose();
+        			}
+        		}	catch (SQLException e1) {
+        			JOptionPane.showMessageDialog(null, "Nao foi possivel alterar contato! " + e1.getLocalizedMessage());
+				}
         		}
         	}		
         });
@@ -98,10 +112,17 @@ public class TelaCadastro extends JFrame{
 		confirmar.setBounds(300, 400, 150, 20);
 
 
-	aviso = new JLabel("Preencha todos os campos");
-	cont.add(aviso);
-	aviso.setBounds(275, 500, 200, 20);
-	aviso.setVisible(false);
+		aviso1 = new JLabel("Preencha todos os campos");
+		cont.add(aviso1);
+		aviso1.setBounds(300, 450, 200, 20);
+		aviso1.setForeground(Color.red);
+		aviso1.setVisible(false);
+		
+		aviso2 = new JLabel("<html><body>Os campos 'nome' e 'senha' <br>precisam ter mais de 3 caracteres</body></html>");
+		cont.add(aviso2);
+		aviso2.setBounds(300, 440, 300, 50);
+		aviso2.setForeground(Color.red);
+		aviso2.setVisible(false);
 	}
 	
 	public static void main(String args[]) {
