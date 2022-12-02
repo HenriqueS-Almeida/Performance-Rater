@@ -1,0 +1,109 @@
+package view;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+
+import controller.MateriaController;
+
+public class MateriasPanel extends JPanel{
+	JButton m, p, q, poo, bd, a;
+	JLabel materia;
+	List<JButton> botoes = new ArrayList<JButton>();
+	int pagina;
+	JScrollPane barra;
+	
+	public MateriasPanel() {
+		criarTela();
+		
+		setLayout(null);
+		setBounds(0,100,800,550);
+		setVisible(true);
+	}
+	
+	private void criarTela() {
+
+		m = new JButton("Matemática");
+		p = new JButton("Português");
+		q = new JButton("Química");
+		poo = new JButton("POO");
+		bd = new JButton("Banco de dados");
+		
+		botoes.add(m);
+		botoes.add(p);
+		botoes.add(q);
+		botoes.add(poo);
+		botoes.add(bd);
+		
+		
+	
+		add(m);
+		m.setBounds(20,150,200,125);
+		add(p);
+		p.setBounds(290,150,200,125);
+		add(q);
+		q.setBounds(560,150,200,125);
+		add(poo);
+		poo.setBounds(290,350,200,125);
+		add(bd);
+		bd.setBounds(560,350,200,125);
+		
+		a= new JButton();
+		a.setBounds(20, 350, 200, 50);
+		add(a);
+		a.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String materiga = JOptionPane.showInputDialog("Insira o nome da matéria");
+				try {
+					addMateria(materiga);
+				} catch (SQLException e1) {
+					JOptionPane.showMessageDialog(null, 
+							"Não foi possivel adicionar a matéria, " + 
+							e1.getLocalizedMessage()
+							);
+				}
+				JOptionPane.showMessageDialog(null, "matéria adicionada com sucesso");
+			}
+		});
+	}
+	
+	public void addMateria(String materia) throws SQLException {
+		MateriaController mc = new MateriaController();
+		
+		JButton b = new JButton(materia);
+		botoes.add(b);
+		
+		mc.salvar(materia, 1);
+		
+	}
+	
+	
+	public static void main(String args[]) {
+		  javax.swing.SwingUtilities.invokeLater(
+				  new Runnable() {                    
+	                	@Override
+	                    public void run() {
+	                    	JFrame.setDefaultLookAndFeelDecorated(true);
+	                    	JDialog.setDefaultLookAndFeelDecorated(true);
+	                    	InterfaceMaterias mat = new InterfaceMaterias();
+	                        mat.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	                        
+	                        
+	                	}
+	        		}
+				  );
+	}
+}
