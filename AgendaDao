@@ -1,0 +1,66 @@
+package controller;
+
+import javax.swing.*;
+
+import dao.AgendaDao;
+import model.Agenda;
+
+import java.sql.Date;
+import java.sql.SQLException;
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.List;
+
+public class AgendaController {
+
+    public void salvar(String nome, Time hora, Date data, String materia, int aluno) 
+		throws SQLException
+	{
+        Agenda agenda = new Agenda();
+        agenda.setNome(nome);
+        agenda.setHora(hora);
+        agenda.setData(data);
+        agenda.setMateria(materia);
+        agenda.setAluno(aluno);
+        
+        new AgendaDao().salvar(agenda);
+    }
+
+    public void alterar(String nome, Time hora, Date data, String materia, int aluno) 
+		throws SQLException 
+	{
+        
+		Agenda agenda = new Agenda();
+		agenda.setNome(nome);
+        agenda.setHora(hora);
+        agenda.setData(data);
+        agenda.setMateria(materia);
+        agenda.setAluno(aluno);
+
+        new AgendaDao().alterar(agenda);
+    }
+
+    public List listaAgendas() {
+        AgendaDao dao = new AgendaDao();
+        try {
+            return dao.findAgendas();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, 
+				"Problemas ao localizar agenda " + 
+				e.getLocalizedMessage()
+			);
+        }
+        return null;
+    }
+
+    public void excluir(String nome) throws SQLException {
+        new AgendaDao().excluir(nome);
+    }
+
+    public Agenda buscaAgendaPorNome(String nome) throws SQLException {
+        AgendaDao dao = new AgendaDao();
+        return dao.findByName(nome);
+    }
+}
