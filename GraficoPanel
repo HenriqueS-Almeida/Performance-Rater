@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,7 +14,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
+import controller.MateriaController;
 import model.Materia;
 
 public class GraficoPanel extends JPanel{
@@ -23,15 +26,15 @@ public class GraficoPanel extends JPanel{
 	JButton b1, b2, b3, b4;
 	Materia n = new Materia();
 	JList lista = new JList();
-	String m[] = {"Matemática", "Português", "Química", "POO", "Banco de dado"};
+	String m[] = {"Matemática", "Português", "Química", "História", "Biologia", "Inglês", "Física", "Filosofia", "Sociologia", "Geografia"};
     Double d = n.calcularMedia();
-    Integer i = 0, j = 0, k = 0, y = 0;
+    Integer l = 0, j = 0, k = 0, y = 0;
 	
 	public GraficoPanel() {
 		criarTelaGrafico();
 		
 		setLayout(null);
-		setBounds(0,100,700, 680);
+		setBounds(0,100,800, 680);
 		setVisible(true);
 		
 	}
@@ -45,6 +48,7 @@ public class GraficoPanel extends JPanel{
 		lista = new JList(m);
 		lista.setSelectedIndex(0);
 		lista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		lista.addListSelectionListener(new Evento());
 		
 		JScrollPane barra = new JScrollPane(lista);
 		
@@ -74,13 +78,13 @@ public class GraficoPanel extends JPanel{
 		e4 = new JLabel("4° etapa");
 		
 		add(e1);
-		e1.setBounds(250, 500, 150, 20);
+		e1.setBounds(250, 450, 150, 20);
 		add(e2);
-		e2.setBounds(375, 500, 150, 20);
+		e2.setBounds(375, 450, 150, 20);
 		add(e3);
-		e3.setBounds(500, 500, 150, 20);
+		e3.setBounds(500, 450, 150, 20);
 		add(e4);
-		e4.setBounds(625, 500, 150, 20);
+		e4.setBounds(625, 450, 150, 20);
 		
 		
 		b1 = new JButton("Inserir nota");
@@ -88,13 +92,21 @@ public class GraficoPanel extends JPanel{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 				String nota = JOptionPane.showInputDialog("Insira a nota");
-				Double m = Double.parseDouble(nota);
-				n.alterarNota(1, m);
+				Double p = Double.parseDouble(nota);
+				int i = lista.getSelectedIndex();
+				MateriaController mc = new MateriaController();
+				n.alterarNota(1, p);
+				try {
+					mc.alterarNota(m[i], n.getNota(1), 1);
+				} catch (SQLException e1) {
+					JOptionPane.showMessageDialog(null, "Não foi possivel alterar a nota " +e1.getLocalizedMessage());
+				}
 				natual.setText(n.calcularMedia()+"");
 				nnecessaria.setText(n.calcularAprovacao()+"");
                 d = n.calcularMedia();
-                i = d.intValue();
+                l = d.intValue();
                 repaint();
 			}
 		});
@@ -104,8 +116,15 @@ public class GraficoPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String nota = JOptionPane.showInputDialog("Insira a nota");
-				Double m = Double.parseDouble(nota);
-				n.alterarNota(2, m);
+				Double p = Double.parseDouble(nota);
+				int i = lista.getSelectedIndex();
+				MateriaController mc = new MateriaController();
+				n.alterarNota(2, p);
+				try {
+					mc.alterarNota(m[i], n.getNota(2), 2);
+				} catch (SQLException e1) {
+					JOptionPane.showMessageDialog(null, "Não foi possivel alterar a nota " +e1.getLocalizedMessage());
+				}
 				natual.setText(n.calcularMedia()+"");
 				nnecessaria.setText(n.calcularAprovacao()+"");
                 d = n.calcularMedia();
@@ -119,8 +138,15 @@ public class GraficoPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String nota = JOptionPane.showInputDialog("Insira a nota");
-				Double m = Double.parseDouble(nota);
-				n.alterarNota(3, m);
+				Double p = Double.parseDouble(nota);
+				int i = lista.getSelectedIndex();
+				MateriaController mc = new MateriaController();
+				n.alterarNota(3, p);
+				try {
+					mc.alterarNota(m[i], n.getNota(3), 3);
+				} catch (SQLException e1) {
+					JOptionPane.showMessageDialog(null, "Não foi possivel alterar a nota " +e1.getLocalizedMessage());
+				}
 				natual.setText(n.calcularMedia()+"");
 				nnecessaria.setText(n.calcularAprovacao()+"");
                 d = n.calcularMedia();
@@ -134,8 +160,15 @@ public class GraficoPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String nota = JOptionPane.showInputDialog("Insira a nota");
-				Double m = Double.parseDouble(nota);
-				n.alterarNota(4, m);
+				Double p = Double.parseDouble(nota);
+				int i = lista.getSelectedIndex();
+				MateriaController mc = new MateriaController();
+				n.alterarNota(4, p);
+				try {
+					mc.alterarNota(m[i], n.getNota(4), 4);
+				} catch (SQLException e1) {
+					JOptionPane.showMessageDialog(null, "Não foi possivel alterar a nota " +e1.getLocalizedMessage());
+				}
 				natual.setText(n.calcularMedia()+"");
 				nnecessaria.setText(n.calcularAprovacao()+"");
                 d = n.calcularMedia();
@@ -145,24 +178,45 @@ public class GraficoPanel extends JPanel{
 		});
 		
 		add(b1);
-		b1.setBounds(225, 550, 100, 20);
+		b1.setBounds(225, 500, 100, 20);
 		add(b2);
-		b2.setBounds(350, 550, 100, 20);
+		b2.setBounds(350, 500, 100, 20);
 		add(b3);
-		b3.setBounds(475, 550, 100, 20);
+		b3.setBounds(475, 500, 100, 20);
 		add(b4);
-		b4.setBounds(600, 550, 100, 20);
+		b4.setBounds(600, 500, 100, 20);
 	}
 	
 	@Override
 	public void paintComponent(Graphics g){
 		super.paintComponents(g);
-		this.setBackground(Color.WHITE);
+		
 		g.setColor(Color.BLACK);
-		g.fillRect(250, 330, 50, i*20);
+		g.fillRect(250, 330, 50, l*20);
         g.fillRect(375, 310, 50, j*20);
         g.fillRect(500, 310, 50, k*20);
         g.fillRect(625, 290, 50, y*20);
+        
+	}
+	
+	private class Evento implements ListSelectionListener{
+
+		@Override
+		public void valueChanged(ListSelectionEvent e) {
+			int i = lista.getSelectedIndex();
+			String materia = m[i];
+			MateriaController mc = new MateriaController();
+			try {
+				n = mc.buscaMateriaPorNome(materia);
+			} catch (SQLException e1) {
+				JOptionPane.showMessageDialog(null, "Não foi possível encontrar a matéria "+e1.getLocalizedMessage());
+				
+			}
+			natual.setText(n.calcularMedia()+"");
+			nnecessaria.setText(n.calcularAprovacao()+"");
+			repaint();
+		}
+		
 	}
 	public static void main(String[] args) {
 		JFrame t = new JFrame("Grafico");
