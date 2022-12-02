@@ -6,7 +6,7 @@ import java.util.List;
 public class Materia {
 	
 	private String nome;
-	private String u_nome;
+	private int u_id;
 	private List<Double> notas = new LinkedList<Double>();
 	private Double mediaAnual = 6.0;
 	
@@ -33,14 +33,18 @@ public class Materia {
 		this.nome = nome;
 	}
 
-	public String getU_nome() {
-		return u_nome;
+	public int getU_id() {
+		return u_id;
 	}
 
-	public void setU_nome(String u_nome) {
-		this.u_nome = u_nome;
+	public void setU_id(int u_id) {
+		this.u_id = u_id;
 	}
-
+	
+	public double getNota(int bim) {
+		return notas.get(bim);
+	}
+	
 	public Double getMediaBimestral(int bim) {
 		return notas.get(bim-1);
 	}
