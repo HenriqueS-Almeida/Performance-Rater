@@ -1,20 +1,21 @@
+package view;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-import view.Agenda;
+import view.InterfaceAgenda;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class TelaInicial extends JFrame{
+public class TelaInicio extends JFrame{
             
 
 
     JButton g, m, a;
 
-    public TelaInicial(){
+    public TelaInicio(){
         setVisible(true);
         setSize(800,680);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -46,12 +47,12 @@ public class TelaInicial extends JFrame{
         a.addActionListener(new ActionListener(){
             @Override
         	public void actionPerformed(ActionEvent e) {
-                new Agenda();
+                new InterfaceAgenda();
                 dispose();
             }});
         add(a);
     }
     public static void main(String[] args) {
-        TelaInicial t = new TelaInicial();
+        TelaInicio t = new TelaInicio();
     }
 }
