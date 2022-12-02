@@ -2,8 +2,8 @@ package controller;
 
 import javax.swing.*;
 
-import dao.MateriaDao;
-import model.Materia;
+import dao.AlunoDao;
+import model.Aluno;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -12,48 +12,53 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class MateriaController {
+public class AlunoController {
 
-    public void salvar(String nome, String u_nome) 
+    public void salvar(String nome, String senha, String curso, int serie) 
 		throws SQLException
 	{
-        Materia materia = new Materia();
-        materia.setNome(nome);
-        materia.setU_nome(u_nome);
+        Aluno aluno = new Aluno();
+        aluno.setNome(nome);
+        aluno.setSenha(senha);
+        aluno.setCurso(curso);
+        aluno.setSerie(serie);
         
-        new MateriaDao().salvar(materia);
+        new AlunoDao().salvar(aluno);
     }
 
-    public void alterarNota(String nome, Double nota, int bim) 
+    public void alterar(int id, String nome, String senha, String curso, int serie) 
 		throws SQLException 
 	{
         
-		Materia materia = new Materia();
-        materia.setNome(nome);
-        materia.alterarNota(bim, nota);
+		Aluno aluno = new Aluno();
+        aluno.setId(id);
+        aluno.setNome(nome);
+        aluno.setSenha(senha);
+        aluno.setCurso(curso);
+        aluno.setSerie(serie);
 
-        new MateriaDao().alterarNota(materia, bim);
+        new AlunoDao().alterar(aluno);
     }
 
-    public List listaMaterias() {
-        MateriaDao dao = new MateriaDao();
+    public List listaAlunos() {
+        AlunoDao dao = new AlunoDao();
         try {
-            return dao.findMaterias();
+            return dao.findAlunos();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, 
-				"Problemas ao localizar materian" + 
+				"Problemas ao localizar alunon" + 
 				e.getLocalizedMessage()
 			);
         }
         return null;
     }
 
-    public void excluir(String nome) throws SQLException {
-        new MateriaDao().excluir(nome);
+    public void excluir(int id) throws SQLException {
+        new AlunoDao().excluir(id);
     }
 
-    public Materia buscaMateriaPorNome(String nome) throws SQLException {
-        MateriaDao dao = new MateriaDao();
+    public Aluno buscaAlunoPorNome(String nome) throws SQLException {
+        AlunoDao dao = new AlunoDao();
         return dao.findByName(nome);
     }
 }
