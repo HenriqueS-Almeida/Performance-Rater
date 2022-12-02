@@ -1,135 +1,64 @@
-package view;
+package model;
 
-import java.awt.*;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import java.sql.Date;
+import java.sql.Time;
 
+public class Agenda {
+	private String nome;
+	private Date data;
+	private Time hora;
+	private String materia;
+	private int aluno;
+	
+	public Agenda() {
+	}
+	
+	public Agenda(String nome, Date data, Time hora, String materia, int aluno) {
+		super();
+		this.nome = nome;
+		this.data = data;
+		this.hora = hora;
+		this.materia = materia;
+		this.aluno = aluno;
+	}
 
-
-public class Agenda{    
-
-    
-
-// variaveis  
-JPanel d;
-JPanel k; 
-JPanel ad;
-JButton[] af = new JButton[31];
-JLabel dom = new JLabel("Dom");
-JLabel seg = new JLabel("Seg");
-JLabel ter= new JLabel("Ter");
-JLabel qua = new JLabel("Qua");
-JLabel qui= new JLabel("Qui");
-JLabel sex= new JLabel("Sex");
-JLabel sáb = new JLabel("Sáb");
-String[] m = new String[12];
-JFrame painelP = new JFrame();
-JTextField descrição = new JTextField();
-JList<String> histórico = new JList<>();
-JFrame painelED = new JFrame();
-
-
-//paineis
-JPanel painel;
-JPanel painels;
-JPanel paineldireito;
-JPanel painelesquerdo;
-
-
-//construtor
-public Agenda(){   
-    painelED  = new JFrame();
-    painelesquerdo = new JPanel();
-    paineldireito = new JPanel();
-    descrição = new JTextField();
-    painels = new JPanel();
-    d = new JPanel();
-    ad = new JPanel();
-    k= new JPanel();    
-    painel = new JPanel();
-    String[] m ={"Janeiro","fevereiro","março","abril","maio","junho","agosto","setembro","outubro","novembro","dezembro"};
-    String[] n = {"Projeto de poo 1/12/2022"};
-    histórico = new JList<>(n);
-
-    
-    //configurando a variavel "ad" e "painels"
-    ad.setLayout(new GridLayout(6,7));
-    painels.setLayout(new GridLayout(1,2));
-    painelED.setLayout(new GridLayout(1,2));
-
-    //configurando o "painel direito"
-    paineldireito.setLayout(new BorderLayout());
-    paineldireito.add(painels, BorderLayout.NORTH);
-    paineldireito.add(painel, BorderLayout.CENTER);
-
-    //configurando o "painel esquerdo"
-    painelesquerdo.setLayout(new BorderLayout(600,10));
-    painelesquerdo.add(descrição, BorderLayout.NORTH);
-    descrição.setSize(222,230);
-    descrição = new JTextField();;
-    painelesquerdo.add(histórico, BorderLayout.CENTER);
-
-    //configurando o painelDE
-    painelED.add(paineldireito);
-    painelED.add(painelesquerdo);
-
-
-    //ano e mes 
-    JButton Ano = new JButton("Ano");
-    JComboBox Mes = new JComboBox<>(m);
-
-    painels.add(Ano);
-    painels.add(Mes);
-
-    //adicionando botoes no painel
-    for (int i = 0; i<af.length; i++){
-	af[i] = new JButton(String.format("%d", i));  
-    }
-
-    
-    //configurando "d"
-    d.setLayout(new GridLayout(1,7));
-
-    d.add(dom);
-    d.add(seg);
-    d.add(ter);
-    d.add(qua);
-    d.add(qui);
-    d.add(sex);
-    d.add(sáb);
-
-    
-    
-    for (int i = 1; i<af.length; i++){
-    ad.add(af[i]);
-
-    }
-   
-    painel.setLayout(new BorderLayout());
-    painel.add(d, BorderLayout.NORTH);
-    painel.add(ad, BorderLayout.CENTER);
-    painelP = new JFrame();
-    painelP.setLayout(new FlowLayout(550,150, 30));
-    painelP.add(painelesquerdo);
-    painelP.add(paineldireito);
-    painelP.setVisible(true);
-    painelP.setSize(1000,400);
-    
-   
+	public String getNome() {
+		return nome;
+	}
+	
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	
+	public Date getData() {
+		return data;
+	}
+	
+	public void setData(Date data) {
+		this.data = data;
+	}
+	
+	public Time getHora() {
+		return hora;
+	}
+	
+	public void setHora(Time hora) {
+		this.hora = hora;
+	}
+	
+	public String getMateria() {
+		return materia;
+	}
+	
+	public void setMateria(String materia) {
+		this.materia = materia;
+	}
+	
+	public int getAluno() {
+		return aluno;
+	}
+	
+	public void setAluno(int aluno) {
+		this.aluno = aluno;
+	}
 }
- 
-    public static void main(String[] args) {
-
-
-      new Agenda();
-        
-       
-}    
-}
-
-
